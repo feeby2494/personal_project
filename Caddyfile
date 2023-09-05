@@ -1,0 +1,21 @@
+http://hello.localhost {
+    handle_path /static/* {
+        root * /staticfiles
+        file_server browse
+    }
+
+    handle_path /media/* {
+        root * /usr/src/app/media
+        file_server
+    }
+
+    handle {
+        root * /usr/src/app/
+        reverse_proxy django:8000
+    }
+}
+
+http://webmail.localhost {
+    reverse_proxy mailhog:8025
+}
+

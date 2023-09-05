@@ -1,0 +1,78 @@
+{% extends "parent/base_send_data.html" %}
+{% load static %}
+
+{% block title %}Social Network{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <header>
+            <h1 class="text-center mt-4">Social Network</h1>
+        </header>
+    </div>
+    <main id="main" class="container">
+        <form class="message-form row mt-3">
+            <div class="col-md-6">
+                <label
+                    for="message-form__author"
+                    class="form-label"
+                >
+                    Name:
+                </label>
+                <input
+                    type="text"
+                    placeholder="Name"
+                    id="message-form__author"
+                    class="message-form__author  form-control"
+                    name="author"
+                    required
+                />
+            </div>
+            <div class="col-md-6">
+                <label
+                    for="message-form__text"
+                    class="form-label"
+                >
+                    Message:
+                </label>
+                <textarea
+                    name="message"
+                    placeholder="Write your message here..."
+                    id="message-form__text"
+                    class="message-form__text form-control"
+                    rows="3"
+                    required
+                >
+                </textarea>
+            </div>
+            <div class="col-12">
+                <input
+                    type="submit"
+                    id="message-form__submit"
+                    class="message-form__submit btn btn-primary mt-2"
+                    value="Send"
+                />  
+            </div>
+        </form>
+        <section class="row mt-4" id="messages">
+            <h3 class="col-12 text-center">Messages</h3>
+            <div id="message__list" class="col-12"></div>
+            <div class="col-12 mt-3 text-center">
+                <button 
+                    class="button btn btn-primary"
+                    id="messages__previous-page"
+                    disabled
+                >
+                    Previous
+                </button>
+                <button 
+                    class="button btn btn-primary"
+                    id="messages__next-page"
+                    disabled
+                >
+                    Next
+                </button>
+            </div>
+        </section>
+    </main>
+    <script defer type="text/javascript" src="{% static 'social/index.js' %}"></script>
+{% endblock %}

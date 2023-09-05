@@ -1,0 +1,25 @@
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0">
+        <title>Index</title>
+    </head>
+    <body>
+        <h1>Hello Django!</h1>
+        <!-- Place we will display websocket connection -->
+        <h2 id="welcome"></h2>
+
+        <script>
+            // Connect to websocket server EchoConsumer
+            const myWebSocket = new WebSocket("ws://{{ request.get_host }}/ws/echo/");
+
+            // Event when a new message is received by websockets
+            myWebSocket.addEventListener("message", (event) => {
+                // Display message
+                document.querySelector("#welcome").textContent = event.data;
+            });
+            
+        </script>
+
+    </body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0">
+        <title>BMI Calculator</title>
+    </head>
+    <body>
+        <h1>BMI Calculator</h1>
+        <label for="height">Height (cm):
+            <input type=""text" name="height" id="height">
+        </label>
+        <label for="weight">Weight (kg):
+            <input type=""text" name="weight" id="weight">
+        </label>
+        <input type="button" id="calculate" value="Calculate">
+        <div id="result"></div>
+
+        <script>
+            // Connect to websocket server
+            const myWebSocket = new WebSocket("ws://{{ request.get_host }}/ws/bmi/");
+
+            var result_div = document.getElementById("result")
+            var height_input = document.getElementById("height")
+            var weight_input = document.getElementById("weight")
+
+            // Event when a new message is recieved by websockets
+            myWebSocket.addEventListener("message", (event) => {
+                const myData = JSON.parse(event.data);
+
+                switch (myData.action) {
+                    case "BMI result": result_div.innerHTML = myData.html;
+                    break;
+                }
+            });
+
+            document.getElementById("calculate").addEventListener('click', () => {
+                const height = parseFloat(height_input.value);
+                const weight = parseFloat(weight_input.value);
+
+                myWebSocket.send(JSON.stringify({
+                    height: height,
+                    weight: weight
+                }));
+            });
+        </script>
+    </body>
+</html>

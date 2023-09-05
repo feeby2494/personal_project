@@ -1,0 +1,19 @@
+{
+	"folders": [
+		{
+			"path": "../../../ifos_nec_nss"
+		},
+		{
+			"path": "../../../sample_map"
+		},
+		{
+			"path": "../../../../webProjects/theTekCowboysFlaskReact"
+		},
+		{
+			"path": "../../../waterfall_troubleshoot"
+		},
+		{
+			"path": "../.."
+		}
+	]
+}

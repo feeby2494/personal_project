@@ -1,0 +1,6 @@
+venv
+postgres_data
+pgdata
+db.sqlite3
+static/*
+staticfiles/*
