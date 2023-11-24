@@ -3,6 +3,8 @@
 # Collect static files
 python manage.py collectstatic --noinput
 
+# Make superuser for admin page
+python manage.py createsuperuser --noinput
 # See if anything changes with app like new apps added
 python manage.py makemigrations
 

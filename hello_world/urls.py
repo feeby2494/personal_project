@@ -24,9 +24,18 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('social_network/', include("app.social_network.urls")),
     path('simple_app/', include("app.simple_app.urls")),
+    path('route_map/', include("app.route_map.urls")),
     path('', current_datetime, name='home'),
+    path('accounts/', include('django_registration.backends.one_step.urls')),
+    path('accounts/', include('django.contrib.auth.urls')),
+    
     
 ] 
+
+# urlpatterns += [
+#     path('accounts/', include('django.contrib.auth.urls')),
+# ]
+
 
 # if os.getenv("DEBUG", "False").lower in ("true", "1", "t"):
 #     urlpatterns = urlpatterns + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

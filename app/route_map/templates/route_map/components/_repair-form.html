@@ -1,0 +1,29 @@
+<div class="input-group container mb-3">
+    <div class="row card w-100 my-3">
+        <div class="col-12 card-header">
+            New Repair
+        </div>
+        <div class="col-12 col-md-6">
+            <select data-submission-id="{{id}}" data-request-type="ws" data-action="get model options for this brand" id="brand-select-{{id}}" class="form-select" aria-label="brand-select">
+                <option>Brand</option>
+                {% for brand in brands %}
+                    <option value="{{brand.name}}">{{brand.name}}</option>
+                {% endfor %}
+            </select>
+            <div data-submission-id="{{id}}" id="model-select-{{id}}"></div>
+        </div>
+        
+        <div class="col-12">
+            <input 
+                data-submission-id="{{id}}"
+                id="serial-input-{{id}}"
+                type="text" 
+                class="form-control" 
+                placeholder="Serial" 
+                aria-label="Serial" 
+                aria-describedby="serial"
+            >
+        </div>
+    </div>
+</div>
+  

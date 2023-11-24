@@ -1,0 +1,46 @@
+
+/* @import "node_modules/ol/ol.css"; */
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+  padding: 0;
+}
+
+.map {
+  width: 100%;
+  min-height: 80vh;
+  height: auto;
+  margin: 0;
+}
+
+#map {
+  z-index: 0;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.title {
+  z-index: 2;
+}
+
+.popover-body {
+  min-width: 276px;
+}
+
+.ol-zoom {
+  top: 15%;
+}
+
+.ol-zoom-in,
+.ol-zoom-out {
+  height: 15%;
+}
+
+button {
+ z-index: 3; 
+}

@@ -12,6 +12,30 @@
         data-host="{{ request.get_host }}"
         data-scheme="{{ request.scheme }}"
     >
+
+        <nav style="z-index: 5;" class="navbar sticky-top bg-body-tertiary">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">Sticky top</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+              
+                <div class="collapse navbar-collapse" id="navbarText">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                      <li class="nav-item">
+                        <a class="nav-link btn btn-primary" data-request-type="local" data-action="switch to map view">Switch to Map View</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link btn btn-primary" data-request-type="ws" data-action="switch to list view">Switch to List View</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link btn btn-primary" data-request-type="ws" data-action="switch to new order view">Switch to New Order View</a>
+                      </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+       
         <div id="content">
             {% block content %}{% endblock %}
         </div>

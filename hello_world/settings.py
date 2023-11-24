@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'hello_world',
     'app.simple_app',
     'app.social_network',
+    'app.route_map',
 ]
 
 MIDDLEWARE = [
@@ -61,7 +62,7 @@ ROOT_URLCONF = 'hello_world.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -73,6 +74,10 @@ TEMPLATES = [
         },
     },
 ]
+
+# Redirect to home URL after login (Default redirects to /accounts/profile/)
+LOGIN_REDIRECT_URL = '/'
+
 
 WSGI_APPLICATION = 'hello_world.wsgi.application'
 
@@ -172,6 +177,20 @@ CHANNEL_LAYERS = {
     },
 }
 
+# logging console output
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+        },
+    },
+    "root": {
+        "handlers": ["console"],
+        "level": "WARNING",
+    },
+}
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
@@ -181,3 +200,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Daphne and ASGI Config
 ASGI_APPLICATION = "hello_world.asgi.application"
+
+
+# Django-Registration settings
+ACCOUNT_ACTIVATION_DAYS = 7

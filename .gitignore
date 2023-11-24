@@ -4,3 +4,7 @@ pgdata
 db.sqlite3
 static/*
 staticfiles/*
+hello_world/.env
+*/.env
+personal_home_back/.flaskenv
+personal_home_front/.env.bu

@@ -1,0 +1,31 @@
+<form class="container">
+    <div class=""row>
+        <div class="col">
+            New Order
+            <label>WO</label>
+            <input type="checkbox">Yes!</input>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            Repairs on this Order
+        </div>
+        <div class="col-12 col-md-6">
+            <div id="new-repair-form"></div>
+        </div>
+    </div>
+    
+    
+    <div class="row">
+        <button 
+            class="btn btn-primary mb-3 col-12 col-md-6"
+            data-request-type="ws" 
+            data-action="add repair form"
+        >Add a Repair</button>
+        <input 
+            data-request-type="submit_order" 
+            data-action="submit order and repairs"
+            class="btn btn-success col-12 col-md-6" 
+            type="submit">Submit!</input>
+    </div>
+</form>

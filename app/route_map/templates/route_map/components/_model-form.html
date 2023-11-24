@@ -1,0 +1,6 @@
+<select data-submission-id="{{submission_id}}" id="model-select-{{submission_id}}" class="form-select" aria-label="model-select">
+    <option  selected>Model</option>
+    {% for model in models %}
+        <option value="{{model.name}}">{{model.name}}</option>
+    {% endfor %}
+</select>

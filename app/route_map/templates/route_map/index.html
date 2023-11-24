@@ -1,0 +1,48 @@
+{% extends "parent/base_send_data.html" %}
+{% load static %}
+
+{% block title %}Customer Home{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@v8.1.0/ol.css">
+<link rel="stylesheet" href={% static 'route_map/map_style.css' %}>
+
+    <div id="view" class="container d-none">
+
+    </div>
+
+    
+<div id="map-container" class="container d-none">
+    
+    
+  <header>
+      <h1 class="title text-center mt-4" style="position: absolute; top: 10%; left: 50%;">Map</h1>
+  </header>
+  <div id="map" class="map"></div>
+  <div id="info" style="display: none;"></div>
+  <div id="track-postion" style="position: absolute; bottom: 15%; left: 0; z-index: 9" >
+  <ul style="list-style-type: none;"></ul>
+      <li>
+      <label class="btn btn-secondary" for="track">
+          track position
+          <input class="btn-check" id="track" type="checkbox"/>
+      </label>
+      </li>
+  </ul>
+  </div>
+  <div id="current-postion-container" style="position: absolute; bottom: 10%; left: 0; z-index: 9" disabled>
+      <ul style="list-style-type: none;"></ul>
+          <li>
+          <button class="btn btn-secondary" id="current-postion" disabled>
+              current postion
+          </button>
+          </li>
+      </ul>
+  </div>
+  
+</div>
+      
+    <script type="module" src={% static 'route_map/js/main.js' %}></script>
+    <script src="https://cdn.jsdelivr.net/npm/ol@v8.1.0/dist/ol.js"></script>
+    <script type="module" src={% static 'route_map/ol-main.js' %}></script>
+{% endblock %}
