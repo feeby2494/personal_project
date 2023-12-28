@@ -3,6 +3,8 @@ from django.db import models
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group
 
+from django.core.validators import RegexValidator
+
 # Brand choices:
 brands = [
     ("ap", "Apple"),
@@ -77,6 +79,11 @@ class Customer(models.Model):
     # workorders
     # devices
     # make into group of "customers"
+    phone = models.CharField(max_length=10, validators=[RegexValidator(r'^\d{1,10}$')], default="0000000000")
+    phone_country_code = models.CharField(max_length=4, validators=[RegexValidator(r'^\d{1,10}$')], default="000")
+
+    def __str__(self):
+        return f"{self.user.get_username()}"
 
 
     # have addressess that will give info for points on the map
@@ -88,6 +95,9 @@ class UsaAddress(models.Model):
     state = models.CharField(max_length=2, choices=states) # state two character abriviation
     postal_code = models.CharField(max_length=5)
 
+    def __str__(self):
+        return f"{self.first_line} {self.second_line} {self.city}, {self.state} {self.postal_code}"
+
 
 #"""
 #
@@ -97,9 +107,16 @@ class UsaAddress(models.Model):
 class Brand(models.Model):
     name = models.CharField(max_length=40)
 
+    def __str__(self):
+        return self.name
+
 class Model(models.Model):
     brand = models.ForeignKey(Brand, on_delete=models.SET_NULL, null=True)
     name = models.CharField(max_length=65)
+    model_number = models.CharField(max_length=65, null=True)
+
+    def __str__(self):
+        return self.name
 
 
 # device is an individual device that can have multiple jobs, depending on how many times it comes back for repair
@@ -108,13 +125,22 @@ class Device(models.Model):
     model = models.ForeignKey(Model, on_delete=models.SET_NULL, null=True)
     serial = models.CharField(max_length=50, null=True, blank=True)
 
+    def __str__(self):
+        return self.serial
+
 class RepairType(models.Model):
     device = models.ForeignKey(Device, on_delete=models.SET_NULL, null=True)
     name = models.CharField(max_length=65)
 
+    def __str__(self):
+        return self.name
+
 class PartNumber(models.Model):
     device = models.ManyToManyField(RepairType)
     name = models.CharField(max_length=65)
+
+    def __str__(self):
+        return self.name
 
 #"""
 #
@@ -128,6 +154,9 @@ class WorkOrder(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, null=True)
     address = models.ForeignKey(UsaAddress, on_delete=models.SET_NULL, null=True) # if customer deletes address tied to a work order, then will need to ask them to edit address or do so in admin console
 
+    def __str__(self):
+        return f"{self.id}: {self.customer.user.get_username}"
+
 # job is a single device that is apart of a work order; since the same device can come back again as a new repair, we do not directly put devices on work order 
 class Repair(models.Model):
     delivery_methods = [("LO", "local"), ("EX", "Express Shipping"), ("NO", "Normal Shipping")]
@@ -136,6 +165,8 @@ class Repair(models.Model):
     device = models.ForeignKey(Device, on_delete=models.SET_NULL, null=True)
     delivery = models.CharField(max_length=2, choices=delivery_methods) # shipping page will denote a work order as express or not; local orders will show up on map when admin is logged in
 
+    def __str__(self):
+        return f"{self.work_order.id}: {self.device.serial}"
 #"""
 #
 # Dynamic Inventory and Parts
@@ -154,12 +185,23 @@ class InventoryLocation(models.Model):
 #
 #"""
 
-# purchase order is a one-to-one relationship with workorders, and just shows if customer paid, net income, net loss, net revunue, and tax info
+# PO is for buying
 class PurchaseOrder(models.Model):
-    work_order = models.OneToOneField(WorkOrder, on_delete=models.SET_NULL, null=True)
+    work_order = models.OneToOneField(WorkOrder, on_delete=models.SET_NULL, null=True, blank=True)
+    desc = models.TextField(max_length=256, null=True)
+    amount = models.DecimalField(max_digits=6, decimal_places=2, default=0.00)
+    tax = models.DecimalField(max_digits=6, decimal_places=2, default=0.00)
+    shipping = models.DecimalField(max_digits=6, decimal_places=2, default=0.00)
+    paypal_fee = models.DecimalField(max_digits=6, decimal_places=2, default=0.00)
+    created_at = models.DateTimeField(auto_now_add=True, null=True)
 
+# SO is for sellings
 class SalesOrder(models.Model):
-    work_order = models.ForeignKey(WorkOrder, on_delete=models.SET_NULL, null=True)
+    work_order = models.ForeignKey(WorkOrder, on_delete=models.SET_NULL, null=True, blank=True)
+    desc = models.TextField(max_length=256, null=True)
+    amount = models.DecimalField(max_digits=6, decimal_places=2, default=0.00)
+    created_at = models.DateTimeField(auto_now_add=True, null=True)
+
 
 #"""
 #
@@ -171,6 +213,8 @@ class SalesOrder(models.Model):
 class Job(models.Model):
     repair_type = models.ForeignKey(RepairType, on_delete=models.SET_NULL, null=True)
     name = models.CharField(max_length=65)
+
+
 
 
 class PartInstance(models.Model):

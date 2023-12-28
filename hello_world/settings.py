@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'app.simple_app',
     'app.social_network',
     'app.route_map',
+    'app.points',
 ]
 
 MIDDLEWARE = [

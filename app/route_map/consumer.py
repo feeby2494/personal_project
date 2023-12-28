@@ -3,7 +3,7 @@ from django.template.loader import render_to_string
 
 from asgiref.sync import async_to_sync
 
-from .models import Brand, Model
+from .models import Brand, Model, PurchaseOrder, SalesOrder
 
 import threading
 
@@ -127,6 +127,9 @@ class MapConsumer(JsonWebsocketConsumer):
             # Don't even need this, a script on front end will deleted all points, BOOM!
             # case 'clear map':
             #     pass
+            case 'get po list':
+                ##### TO DO: check if current user from frontend is apart of admin group
+                threading.Thread(target=self.get_po_list, args=[True, data_received['start_date'], data_received['end_date']]).start()
 
                 
 
@@ -192,6 +195,38 @@ class MapConsumer(JsonWebsocketConsumer):
             'html': render_to_string(f"route_map/components/_model-form.html", {'selector': selector, 'models': models, 'submission_id': submission_id})
         })
     
+    def get_po_list(self, admin, start_date, end_date):
+        """Get all po from start date to end date
+
+            If no start_date nor end_date, then get all po's
+
+            Only do so if admin flag set true, else return dummy po
+
+        """
+
+
+        if admin:
+            """send po list to client"""
+            if start_date and end_date:
+                po_list = PurchaseOrder.objects.filter(created_at__gte=f'{start_date}', created_at__lte=f'{end_date}')
+            else:
+                po_list = PurchaseOrder.objects.all()
+
+            # Render HTML and send to client
+            async_to_sync(self.channel_layer.group_send)(self.room_name, {
+                'type': 'send.html', # Run send_html()
+                'selector': f"po-list",
+                'action': 'send po list',
+                'html': render_to_string(f"route_map/components/_po-list.html", {'po_list': po_list, 'start_date': start_date, 'end_date': end_date})
+            })
+        else:
+            # Render HTML and send to client
+            async_to_sync(self.channel_layer.group_send)(self.room_name, {
+                'type': 'send.html', # Run send_html()
+                'selector': f"po-list",
+                'action': 'send po list',
+                'html': render_to_string(f"route_map/components/_po-list.html", {'po_list': [{'desc': "none"}], 'start_date': start_date, 'end_date': end_date})
+            })
     
 
     # def send_list_messages(self):

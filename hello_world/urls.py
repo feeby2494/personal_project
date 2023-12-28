@@ -15,19 +15,20 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from .views import current_datetime
+from .views import current_datetime, profile
 from django.conf import settings
 from django.conf.urls.static import static
 import os
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('social_network/', include("app.social_network.urls")),
-    path('simple_app/', include("app.simple_app.urls")),
+    path('', profile, name='profile'),
     path('route_map/', include("app.route_map.urls")),
-    path('', current_datetime, name='home'),
     path('accounts/', include('django_registration.backends.one_step.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
+    # path('social_network/', include("app.social_network.urls")),
+    # path('simple_app/', include("app.simple_app.urls")),
+    # path('', current_datetime, name='home'),
     
     
 ] 

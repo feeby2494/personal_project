@@ -1,0 +1,19 @@
+{% extends "parent/base_send_data.html" %}
+{% load i18n %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+        <div class="row text-center w-100 mt-5">
+            <div class="col">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group">
+                        Username: {{user.Username}}
+                    </li>
+                    <li class="list-group">
+                        Groups: {{my_groups}}
+                    </li>
+                </ul>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}
