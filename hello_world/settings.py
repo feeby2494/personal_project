@@ -205,3 +205,4 @@ ASGI_APPLICATION = "hello_world.asgi.application"
 
 # Django-Registration settings
 ACCOUNT_ACTIVATION_DAYS = 7
+SESSION_COOKIE_SECURE = True
