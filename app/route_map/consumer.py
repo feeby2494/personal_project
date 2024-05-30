@@ -178,7 +178,7 @@ class MapConsumer(JsonWebsocketConsumer):
             'type': 'send.html', # Run send_html()
             'selector': 'new-repair-form',
             'action': 'added repair form',
-            'html': render_to_string(f"route_map/components/_repair-form.html", {'id': id, 'brands': brands})
+            'html': render_to_string("route_map/components/_repair-form.html", {'id': id, 'brands': brands})
         })
 
     def get_model_opts_for_brand(self, value, selector, submission_id):
@@ -192,7 +192,7 @@ class MapConsumer(JsonWebsocketConsumer):
             'type': 'send.html', # Run send_html()
             'selector': f"model-select-{submission_id}",
             'action': 'send model options',
-            'html': render_to_string(f"route_map/components/_model-form.html", {'selector': selector, 'models': models, 'submission_id': submission_id})
+            'html': render_to_string("route_map/components/_model-form.html", {'selector': selector, 'models': models, 'submission_id': submission_id})
         })
     
     def get_po_list(self, admin, start_date, end_date):
@@ -215,17 +215,17 @@ class MapConsumer(JsonWebsocketConsumer):
             # Render HTML and send to client
             async_to_sync(self.channel_layer.group_send)(self.room_name, {
                 'type': 'send.html', # Run send_html()
-                'selector': f"po-list",
+                'selector': "po-list",
                 'action': 'send po list',
-                'html': render_to_string(f"route_map/components/_po-list.html", {'po_list': po_list, 'start_date': start_date, 'end_date': end_date})
+                'html': render_to_string("route_map/components/_po-list.html", {'po_list': po_list, 'start_date': start_date, 'end_date': end_date})
             })
         else:
             # Render HTML and send to client
             async_to_sync(self.channel_layer.group_send)(self.room_name, {
                 'type': 'send.html', # Run send_html()
-                'selector': f"po-list",
+                'selector': "po-list",
                 'action': 'send po list',
-                'html': render_to_string(f"route_map/components/_po-list.html", {'po_list': [{'desc': "none"}], 'start_date': start_date, 'end_date': end_date})
+                'html': render_to_string("route_map/components/_po-list.html", {'po_list': [{'desc': "none"}], 'start_date': start_date, 'end_date': end_date})
             })
     
 

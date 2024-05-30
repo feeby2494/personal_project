@@ -13,7 +13,7 @@ from requests.exceptions import HTTPError
 def update_youtube_playlist_json(playlist_id, api_key):
     try:
         response = requests.get(
-            f"https://youtube.googleapis.com/youtube/v3/playlists?part=snippet&part=player",
+            "https://youtube.googleapis.com/youtube/v3/playlists?part=snippet&part=player",
             params={
                 "id": f"{playlist_id}",
                 "key": f"{api_key}",
