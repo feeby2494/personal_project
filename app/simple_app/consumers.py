@@ -6,7 +6,7 @@ from django.template.loader import render_to_string
 from datetime import datetime
 import time
 import threading
-from random import randint
+import secrets
 
 class EchoConsumer(WebsocketConsumer):
     
@@ -44,7 +44,7 @@ class BingoConsumer(JsonWebsocketConsumer):
         ## Send numbers to client
         # Generates numbers 5 random numbers
         random_numbers = list(set(
-            [randint(1, 10) for _ in range(5)]
+            [secrets.SystemRandom().randint(1, 10) for _ in range(5)]
             ))
         message = {
             'action': 'New ticket',
@@ -57,7 +57,7 @@ class BingoConsumer(JsonWebsocketConsumer):
         def send_ball(self):
             while True:
                 # Send message to client
-                random_ball = randint(1, 10)
+                random_ball = secrets.SystemRandom().randint(1, 10)
                 message = {
                     'action': 'New ball',
                     'ball': random_ball
