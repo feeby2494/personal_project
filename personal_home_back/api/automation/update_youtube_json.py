@@ -19,7 +19,7 @@ def update_youtube_playlist_json(playlist_id, api_key):
                 "key": f"{api_key}",
                 },
             headers={"Accept": "application/json"},
-        )
+        timeout=60)
 
         # If the response was successful, no Exception will be raised
         response.raise_for_status()
