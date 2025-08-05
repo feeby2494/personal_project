@@ -1,8 +1,8 @@
-from random import randint
 from api import app
 from flask import Response
 import json
 import os
+import secrets
 
 @app.route('/api/<lang>/<level>/all')
 def get_all_json( lang, level):
@@ -24,7 +24,7 @@ def get_some_json( lang, level, how_many):
     # Figure out array of indexes to grab from data
     indexes = []
     for i in range(int(how_many)):
-        random_index = randint(0, len(data) - 1)
+        random_index = secrets.SystemRandom().randint(0, len(data) - 1)
         if random_index not in indexes:
             indexes.append(random_index)
         else:
